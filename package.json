@@ -4,7 +4,7 @@
   "description": "A contact applications that keeps details of contacts and peforms actions on contacts",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "live-server --open=dist"
   },
   "author": "",
   "license": "ISC",

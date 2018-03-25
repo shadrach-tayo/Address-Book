@@ -2,10 +2,12 @@
 	--color-dark-blue: #0E0093FF;
 	--color-light-blue: #4800FFFF;
 	--color-white: #fff;
+	--color-dark-white: #eee;
 	--color-ash: #ccc;
 	--color-black: rgb(0, 0, 0);
+	--color-light-black: rgba(0, 0, 0, 0.75);
 	--color-dark-grey: #808080FF;
-	--color-light-grey: #A8A8A8FF;
+	--color-light-grey: #AFAFAFB4;
 	--color-box-shadow: rgba(0, 0, 0, 0.2);
 }
 
@@ -22,6 +24,12 @@ body {
 	background: #fff;
 	color: #FFFFFFFF;
 	overflow-x: hidden;
+}
+
+@media screen and (min-width: 768px) {
+	html {
+		font-size: 12px;
+	}
 }
 
 * {
@@ -150,6 +158,8 @@ body {
 	border: none;
 	border-radius: .5rem;
 	box-shadow: 0 .3rem 1rem var(--color-light-grey);
+	display: block;
+	transition: all .3s ease-in;
 }
 
 .contact {
@@ -227,10 +237,157 @@ body {
 }
 
 .contact-btn:hover {
-	transform: translateY(-.3rem);
+	transform: translateY(-.2rem);
 }
 
 .contact-btn:active {
 	transform: translateY(.1rem);
 	box-shadow: 0 .1rem .5rem var(--color-dark-grey);
 }
+
+/*Styling for view Template*/
+
+.contact-view {
+	width:100vw;
+	height: 100vh;
+	background-color: var(--color-dark-white);
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 2;
+	display: none;
+}
+
+.back-btn {
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	top: .5rem;
+	left: .5rem;
+	background-color: var(--color-dark-white);
+}
+
+.details-header {
+	width: 100%;
+	height: 50%;
+	/*max-height: 30%;*/
+	background-image: url('../images/hero.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+}
+
+
+
+.details-header .contact-name {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	padding: 1rem;
+	width: 100%;
+	background-color: var(--color-light-black);
+	color: var(--color-white);
+}
+
+.action-buttons {
+	position: absolute;
+	top: .2rem;
+	right: .2rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: .2rem;
+}
+
+.edit-btn {
+	width: 50px;
+	height: 50px;
+	background-color: var(--color-dark-white);
+	margin: .3rem;
+
+}
+
+.delete-btn {
+	width: 50px;
+	height: 50px;
+	margin: .3rem;
+	background-color: var(--color-dark-white);
+}
+
+.details-content {
+	width: 100vw;
+	padding: .1rem .1rem;
+	background-color: var(--color-dark-white);
+}
+
+@media screen and (min-width: 768px) {
+	.details-content {
+		width: 70%;
+		margin: 0 auto;
+	}
+}
+
+ul.details-list {
+	padding: 2rem;
+	padding-start: 0;
+	padding-end: 0;
+}
+
+.detail-item {
+	color: var(--color-black);
+	background: var(--color-white);
+	padding: 1rem;
+	padding-end: 0;
+	padding-start: .5rem;
+	list-style-type: none;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+	width: 100%;
+}
+
+.detail-item:not(:last-child) {
+	margin-bottom: 1rem;
+}
+
+.detail-title {
+	flex: 1;
+	font-size: 1rem;
+	color: var(--color-dark-grey);
+}
+
+.detail-name {
+	flex: 2;
+	align-self: flex-end;
+	font-size: 1.5rem;
+	letter-spacing: .2px;
+	text-align: right;
+}
+
+
+.active-template {
+	top: 0;
+	display: block;
+	animation: moveIn .3s ease-in;
+	animation-fill-mode: backwards;
+}
+
+@keyframes moveIn {
+	0% {
+		opacity: 0;
+		top: 90%;
+	}
+
+	50% {
+		opacity: .5;
+		top: 50%;
+	}
+
+	100% {
+		opacity: 1;
+		top: 0;
+	}
+}
+
