@@ -1,0 +1,16 @@
+{
+  "name": "Address-Book",
+  "version": "1.0.0",
+  "description": "A contact applications that keeps details of contacts and peforms actions on contacts",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-sass": "^3.2.1"
+  }
+}
