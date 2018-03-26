@@ -1,6 +1,8 @@
 :root {
 	--color-dark-blue: #0E0093FF;
 	--color-light-blue: #4800FFFF;
+	--color-light-purple: #982DD1E2;
+	--color-dark-purple: #800DBEFF;
 	--color-white: #fff;
 	--color-dark-white: #eee;
 	--color-ash: #ccc;
@@ -152,6 +154,9 @@ body {
 	background-image: linear-gradient(to right bottom, #EF0F13FF,#BF1739FF);
 }
 
+
+/*Styling for the default template*/
+
 .contacts {
 	min-height: 200px;
 	width: 80%;
@@ -291,6 +296,30 @@ body {
 	        box-shadow: 0 .1rem .5rem var(--color-dark-grey);
 }
 
+.add-contact {
+	position: fixed;
+	bottom: 1rem;
+	right: 1rem;
+	width: 4rem;
+	height: 4rem;
+	padding: .5rem;
+	border-radius: 50%;
+	border: none;
+	background-color: var(--color-dark-purple);
+	background-image: url(../images/add-contact.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	cursor: pointer;
+	-webkit-transition: all .3s ease-in;
+	transition: all .3s ease-in;
+	outline: none;
+	z-index: 2;
+}
+
+.add-contact:hover {
+	background-color: var(--color-light-purple);
+}
+
 /*Styling for view Template*/
 
 .contact-view {
@@ -310,12 +339,20 @@ body {
 	position: absolute;
 	top: .5rem;
 	left: .5rem;
+	padding: .5rem;
+	border-radius: 50%;
+	border: none;
 	background-color: var(--color-dark-white);
+	background-image: url(../images/left-arrow.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	/*background-size: cover;*/
+	cursor: pointer;
 }
 
 .details-header {
 	width: 100%;
-	height: 50%;
+	height: 40%;
 	/*max-height: 30%;*/
 	background-image: url('../images/hero.jpg');
 	background-position: center;
@@ -356,16 +393,31 @@ body {
 .edit-btn {
 	width: 50px;
 	height: 50px;
+	padding: .5rem;
+	border-radius: 50%;
+	border: none;
 	background-color: var(--color-dark-white);
-	margin: .3rem;
-
+	background-image: url(../images/pencil-edit-button.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	/*background-size: cover;*/
+	margin: .3rem .5rem .3rem .3rem;
+	cursor: pointer;
 }
 
 .delete-btn {
 	width: 50px;
 	height: 50px;
 	margin: .3rem;
+	padding: .5rem;
+	border-radius: 50%;
+	border: none;
 	background-color: var(--color-dark-white);
+	background-image: url(../images/trash.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	/*background-size: cover;*/
+	cursor: pointer;
 }
 
 .details-content {
@@ -432,6 +484,58 @@ ul.details-list {
 	text-align: right;
 }
 
+
+/*Styling for new contact template*/
+
+.new-contact {
+	width: 100vw;
+	height: 100vh;
+	padding: 0;
+	display: none;
+	background-color: var(--color-dark-white);
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 2;
+}
+
+.new-contact-body {
+	padding: 2rem;
+}
+
+.new-contact-text {
+	margin: 0 0 1.5rem 0;
+	display: inline-block;
+	font-size: 2rem;
+	color: var(--color-light-grey);
+}
+
+.contact-form-block {
+	width: 100%;
+}
+
+.contact-form {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+	-ms-flex-line-pack: distribute;
+	    align-content: space-around;
+}
+
+input {
+	margin: .5rem 0;
+	padding: .5rem 1rem;
+	text-indent: .2rem;
+	border: 1px solid var(--color-ash);
+	outline-color: var(--color-ash);
+}
 
 .active-template {
 	top: 0;
