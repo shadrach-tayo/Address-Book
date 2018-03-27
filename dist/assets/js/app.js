@@ -129,8 +129,9 @@ class AddressBook {
 							</span>
 							<span class="contact-number">${contact.phone}</span>
 						</div>
-		
-						<button class="contact-btn js-view-contact" data-key="${contact.id}">view</button>
+						<span class="contact-view-button">
+							<button class="contact-btn js-view-contact" data-key="${contact.id}">view</button>
+						<span>
 					</div>
 				`;
 			}
