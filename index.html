@@ -68,7 +68,6 @@
 	<div class="details-header">
 		<button class="back-btn js-remove-template"></button>
 		<div class="action-buttons">
-			<button class="edit-btn">
 			</button>
 		</div>
 	</div>
@@ -76,9 +75,10 @@
 		<h3 class="new-contact-text">New contact :</h3>
 		<div class="contact-form-block">
 			<form class="contact-form">
-				<input type="text" class="new-contact-name" placeholder="Name" autofocus />
-				<input type="phone" class="new-contact-phone" placeholder="Phone" />
-				<input type="email" class="new-contact-email" placeholder="Email" />
+				<input type="text" class="new-contact-name" placeholder="Name" autofocus required />
+				<input type="phone" class="new-contact-phone" placeholder="Phone" required />
+				<input type="email" class="new-contact-email" placeholder="Email" required />
+				<input type="submit" class="js-new-contact" value="Add contact">
 			</form>
 		</div>
 	</div>

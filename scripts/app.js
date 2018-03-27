@@ -12,20 +12,46 @@ class AddressBook {
 		this.lastInit = this.lastInit.bind(this);
 		this.currentView = this.currentView.bind(this);
 		this.populateData = this.populateData.bind(this);
+		this.addNewContact = this.addNewContact.bind(this);		
 		this.deleteContact = this.deleteContact.bind(this);		
-		this.addNewContact = this.addNewContact.bind(this);
 		this.renderContacts = this.renderContacts.bind(this);
 		this.getViewButtons = this.getViewButtons.bind(this);
 		this.refreshContacts = this.refreshContacts.bind(this);
 		this.viewContactDetails = this.viewContactDetails.bind(this);
 		this.removeDeletedContact = this.removeDeletedContact.bind(this);
+		this.showNewContactTemplate = this.showNewContactTemplate.bind(this);
 		this.attachListenerAndCallback = this.attachListenerAndCallback.bind(this);
 
+		this.showNewContact = this.showNewContact.bind(this);
 
 		this.populateData();
 		this.renderContacts();
 		this.addEventListeners();
 		this.lastInit();
+	}
+
+	addNewContact(contact) {
+		this.contactData.set(contact.id, contact);
+		this.showNewContact(contact);
+	}
+
+	showNewContact(contact) {
+		this.contactListTemplate.innerHTML += `
+					<div class="contact text-center" data-key="${contact.id}">
+						<span class="contact-image-block">
+							<img class="contact-avatar" src="${contact.avatarUrl}" alt="${contact.name}'s avatar"></img>
+						</span>
+						<div class="contact-details">
+							<span class="contact-name">${contact.name}
+							</span>
+							<span class="contact-number">${contact.phone}</span>
+						</div>
+		
+						<button class="contact-btn js-view-contact" data-key="${contact.id}">view</button>
+					</div>
+				`;
+		console.log('new contact displayed');
+		this.getViewButtons();
 	}
 
 	attachListenerAndCallback(elem, event, callback, bind = false) {
@@ -38,10 +64,10 @@ class AddressBook {
 
 	addEventListeners() {
 		[...this.contactViewButtons].forEach( button => button.addEventListener('click', this.viewContactDetails.bind({}, button.dataset.key)));
-		this.attachListenerAndCallback(this.addContactButton, 'click', this.addNewContact);
+		this.attachListenerAndCallback(this.addContactButton, 'click', this.showNewContactTemplate);
 	}
 
-	addNewContact() {
+	showNewContactTemplate() {
 		this.view.showTemplate(this.view.newContactTemplate);
 	}
 
@@ -103,7 +129,6 @@ class AddressBook {
 				contact.parentNode.removeChild(contact);
 			}
 		}
-
 	}
 
 	deleteContact(elem) {
@@ -254,15 +279,78 @@ class View {
 
 class Form {
 	constructor() {
-		this.newNameInput = document.querySelector('.new-contact-name');
-		this.newPhoneInput = document.querySelector('.new-contact-phone');
-		this.newEmailInput = document.querySelector('.new-contact-email');
-
 		this.getNewContactInputs();
+		this.AddNewForm = document.querySelector('.contact-form');
+
+		this.getNewContactValues = this.getNewContactValues.bind(this);
+		this.getNewContactInputs = this.getNewContactInputs.bind(this);
+		this.validateData = this.validateData.bind(this);
+		this.generateId = this.generateId.bind(this);
+		this.clearInputValues = this.clearInputValues.bind(this);
+
+		this.getNewContactInputs()
+		this.addEventListeners();
+	}
+
+	addEventListeners() {
+		this.AddNewForm.addEventListener('submit', this.getNewContactValues);
 	}
 
 	getNewContactInputs() {
-		this.NewContactsInputs = [this.newNameInput, this.newPhoneInput, this.newEmailInput];
+		this.newNameInput = document.querySelector('.new-contact-name');
+		this.newPhoneInput = document.querySelector('.new-contact-phone');
+		this.newEmailInput = document.querySelector('.new-contact-email');
+		this.newContactSubmit = document.querySelector('.js-new-contact');
+
+		App.attachListenerAndCallback(this.newContactSubmit, 'click', this.getNewContactValues);
+	}
+
+	getNewContactValues(e) {
+		e.preventDefault();
+		// this.newContactValues = [this.newNameInput.value, this.newPhoneInput.value, this.newEmailInput.value];
+		let [name, phone, email] = [document.querySelector('.new-contact-name').value, document.querySelector('.new-contact-phone').value, document.querySelector('.new-contact-email').value];
+
+		let result_ok = this.validateData(name, phone);
+		if(result_ok) {
+			let id = this.generateId();
+			let contact = {
+				id,
+				name,
+				phone,
+				email,
+				avatarUrl: './assets/images/avatar.jpg',
+				backgroundUrl: '../images/avatar.jpg'
+			}
+			this.clearInputValues(this.newNameInput, this.newPhoneInput, this.newEmailInput);
+			App.view.removeTemplates();
+			App.addNewContact(contact);
+		}
+	}
+
+	clearInputValues(...inputs) {
+		inputs.forEach(input => input.value = " ");
+	}
+
+	validateData(name, phone) {
+		if(name = '' && name.length > 20) return false;
+		let phoneReg = /[0-9]{11,14}/;
+		if(!phoneReg.test(phone)) return false
+
+		return true;
+	}
+
+	generateId() { 
+		let num = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+		let alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
+		let id = '';
+		for(let i = 0; i < 3; i++) {
+			if(i % 2 == 0) {
+				id += num[Math.floor(Math.random() * 9)];
+			} else {
+				id += alpha[Math.floor(Math.random() * 9)];
+			}
+		}
+		return id;
 	}
 
 }

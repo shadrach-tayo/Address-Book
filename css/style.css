@@ -3,6 +3,7 @@
 	--color-light-blue: #4800FFFF;
 	--color-light-purple: #982DD1E2;
 	--color-dark-purple: #800DBEFF;
+	--color-light-green: #27D75CEE;
 	--color-white: #fff;
 	--color-dark-white: #eee;
 	--color-ash: #ccc;
@@ -456,11 +457,33 @@ ul.details-list {
 
 input {
 	margin: .5rem 0;
-	padding: .5rem 1rem;
+	padding: .8rem 1rem;
 	text-indent: .2rem;
 	border: 1px solid var(--color-ash);
+	border-radius: .2rem;
 	outline-color: var(--color-ash);
+	transition: all .2s ease-in;
 }
+
+input[type="submit"] {
+	cursor: pointer;
+	background-color: var(--color-light-purple);
+}
+
+input::placeholder {
+	color: var(--color-light-black);
+	letter-spacing: 2px;
+}
+
+input:focus {
+	background-color: var(--color-dark-white);
+	border-color: var(--color-light-green);
+}
+
+input:focus::placeholder {
+	color: var(--color-light-black);
+}
+
 
 .active-template {
 	top: 0;
