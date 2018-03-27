@@ -1,6 +1,7 @@
 :root {
 	--color-dark-blue: #0E0093FF;
 	--color-light-blue: #4800FFFF;
+	--color-light-red: #ED1116E5;
 	--color-light-purple: #982DD1E2;
 	--color-dark-purple: #800DBEFF;
 	--color-light-green: #27D75CEE;
@@ -8,7 +9,7 @@
 	--color-dark-white: #eee;
 	--color-ash: #ccc;
 	--color-black: rgb(0, 0, 0);
-	--color-light-black: rgba(0, 0, 0, 0.75);
+	--color-light-black: rgba(0, 0, 0, 0.2);
 	--color-dark-grey: #808080FF;
 	--color-light-grey: #AFAFAFB4;
 	--color-box-shadow: rgba(0, 0, 0, 0.2);
@@ -343,7 +344,7 @@ body {
 	padding: .5rem;
 	border-radius: 50%;
 	border: none;
-	background-color: var(--color-dark-white);
+	background-color: var(--color-light-black);
 	background-image: url(../images/left-arrow.png);
 	background-position: center;
 	background-repeat: no-repeat;
@@ -541,9 +542,23 @@ input {
 	transition: all .2s ease-in;
 }
 
-input[type="submit"] {
-	cursor: pointer;
+button[type="submit"] {
+	width: 9rem;
+	margin-top: 1rem;
+	font-size: 1.5rem;
+	color: var(--color-dark-white);
+	letter-spacing: .3rem;
+	padding: .8rem 0;
 	background-color: var(--color-light-purple);
+	border-radius: .2rem;
+	border: none;
+	cursor: pointer;
+	-webkit-transition: all .3s;
+	transition: all .3s;
+}
+
+button[type="submit"]:hover {
+	background-color: #A337C7AF;
 }
 
 input::-webkit-input-placeholder {
@@ -569,6 +584,14 @@ input::placeholder {
 input:focus {
 	background-color: var(--color-dark-white);
 	border-color: var(--color-light-green);
+}
+
+input:not(:placeholder-shown):invalid {
+	border-color: var(--color-light-red)
+}
+
+input:valid {
+	border-color: var(--color-light-green)
 }
 
 input:focus::-webkit-input-placeholder {

@@ -11,6 +11,7 @@ class AddressBook {
 
 		this.lastInit = this.lastInit.bind(this);
 		this.currentView = this.currentView.bind(this);
+		this.editContact = this.editContact.bind(this);
 		this.populateData = this.populateData.bind(this);
 		this.addNewContact = this.addNewContact.bind(this);		
 		this.deleteContact = this.deleteContact.bind(this);		
@@ -52,6 +53,14 @@ class AddressBook {
 				`;
 		console.log('new contact displayed');
 		this.getViewButtons();
+	}
+
+	editContact(button) {
+		let contactKey = button.dataset.key;
+		if(this.contactData.has(contactKey)) {
+			let contactToEdit = this.contactData.get(contactKey);
+			this.view.showEditTemplate(contactToEdit);
+		}
 	}
 
 	attachListenerAndCallback(elem, event, callback, bind = false) {
@@ -150,6 +159,7 @@ class AddressBook {
 	getViewButtons() {
 		this.contactViewButtons = document.querySelectorAll('.js-view-contact');
 		this.addContactButton = document.querySelector('.js-add-contact');
+		this.addEventListeners();
 	}
 
 	lastInit() {
@@ -193,6 +203,7 @@ class View {
 		this.getUtilButtons = this.getUtilButtons.bind(this);
 		this.getBackButtons = this.getBackButtons.bind(this);
 		this.removeTemplates = this.removeTemplates.bind(this);
+		this.showEditTemplate = this.showEditTemplate.bind(this);
 
 		this.getBackButtons();
 	}
@@ -241,6 +252,11 @@ class View {
 		this.getUtilButtons();
 	}
 
+	// write code to display contact to edit in a form
+	showEditTemplate(contact) {
+		console.log(contact);
+	}
+
 
 	hideTemplates() {
 		this.defaultTemplate.style.display = 'none';
@@ -270,12 +286,35 @@ class View {
 		this.deleteButton = document.querySelector('.js-delete-contact');
 		this.getBackButtons();
 
-		// this.attachListenerAndCallback(this.editButton, App.editContact);
+		App.attachListenerAndCallback(this.editButton, 'click', App.editContact, true);
 		App.attachListenerAndCallback(this.deleteButton, 'click', App.deleteContact, true);
 	}	
 
 }
 
+
+
+function validateData(name, phone) {
+	if(name = '' && name.length > 20) return false;
+	let phoneReg = /[0-9]{11,14}/;
+	if(!phoneReg.test(phone)) return false
+
+	return true;
+}
+
+function generateId() { 
+	let num = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+	let alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
+	let id = '';
+	for(let i = 0; i < 3; i++) {
+		if(i % 2 == 0) {
+			id += num[Math.floor(Math.random() * 9)];
+		} else {
+			id += alpha[Math.floor(Math.random() * 9)];
+		}
+	}
+	return id;
+}
 
 class Form {
 	constructor() {
@@ -284,8 +323,8 @@ class Form {
 
 		this.getNewContactValues = this.getNewContactValues.bind(this);
 		this.getNewContactInputs = this.getNewContactInputs.bind(this);
-		this.validateData = this.validateData.bind(this);
-		this.generateId = this.generateId.bind(this);
+		// this.validateData = this.validateData.bind(this);
+		// this.generateId = this.generateId.bind(this);
 		this.clearInputValues = this.clearInputValues.bind(this);
 
 		this.getNewContactInputs()
@@ -293,7 +332,7 @@ class Form {
 	}
 
 	addEventListeners() {
-		this.AddNewForm.addEventListener('submit', this.getNewContactValues);
+		this.AddNewForm.addEventListener('submit', Form.getNewContactValues);
 	}
 
 	getNewContactInputs() {
@@ -310,9 +349,9 @@ class Form {
 		// this.newContactValues = [this.newNameInput.value, this.newPhoneInput.value, this.newEmailInput.value];
 		let [name, phone, email] = [document.querySelector('.new-contact-name').value, document.querySelector('.new-contact-phone').value, document.querySelector('.new-contact-email').value];
 
-		let result_ok = this.validateData(name, phone);
+		let result_ok = validateData(name, phone);
 		if(result_ok) {
-			let id = this.generateId();
+			let id = generateId();
 			let contact = {
 				id,
 				name,
@@ -329,28 +368,6 @@ class Form {
 
 	clearInputValues(...inputs) {
 		inputs.forEach(input => input.value = " ");
-	}
-
-	validateData(name, phone) {
-		if(name = '' && name.length > 20) return false;
-		let phoneReg = /[0-9]{11,14}/;
-		if(!phoneReg.test(phone)) return false
-
-		return true;
-	}
-
-	generateId() { 
-		let num = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-		let alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
-		let id = '';
-		for(let i = 0; i < 3; i++) {
-			if(i % 2 == 0) {
-				id += num[Math.floor(Math.random() * 9)];
-			} else {
-				id += alpha[Math.floor(Math.random() * 9)];
-			}
-		}
-		return id;
 	}
 
 }
