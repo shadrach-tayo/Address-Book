@@ -71,6 +71,7 @@ body {
 	top: 5px;
 	left: 5px;
 	padding: .5rem;
+	visibility: hidden;
 	cursor: pointer;
 }
 
@@ -505,6 +506,39 @@ input:valid {
 input:focus::placeholder {
 	color: var(--color-light-black);
 }
+
+
+/*styling for edit contact template */
+
+.edit-contact {
+	width: 100vw;
+	height: 100vh;
+	padding: 0;
+	display: none;
+	background-color: var(--color-dark-white);
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 2;
+}
+
+.edit-contact-body {
+	padding: 2rem;
+}
+
+.edit-contact-form { 
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-content: space-around;
+}
+
+.text-title {
+	font-size: 2rem;
+	text-transform: uppercase;
+	color: var(--color-dark-grey);
+}
+
 
 
 .active-template {

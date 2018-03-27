@@ -18,6 +18,7 @@ class AddressBook {
 		this.renderContacts = this.renderContacts.bind(this);
 		this.getViewButtons = this.getViewButtons.bind(this);
 		this.refreshContacts = this.refreshContacts.bind(this);
+		this.addEditedContact = this.addEditedContact.bind(this);
 		this.viewContactDetails = this.viewContactDetails.bind(this);
 		this.removeDeletedContact = this.removeDeletedContact.bind(this);
 		this.showNewContactTemplate = this.showNewContactTemplate.bind(this);
@@ -34,6 +35,13 @@ class AddressBook {
 	addNewContact(contact) {
 		this.contactData.set(contact.id, contact);
 		this.showNewContact(contact);
+	}
+
+	addEditedContact(contact) {
+		let id = contact.id;
+		this.contactData.delete(id);
+		this.refreshContacts();
+		this.addNewContact(contact);
 	}
 
 	showNewContact(contact) {
@@ -140,8 +148,11 @@ class AddressBook {
 		}
 	}
 
-	deleteContact(elem) {
+	deleteContact(elem, id) {
+
 		let key = elem.dataset.key;
+		console.log(key);
+
 		if(this.contactData.has(key)) {
 			let contact = this.contactData.get(key);
 			this.contactData.delete(key);
@@ -189,9 +200,9 @@ class View {
 		this.defaultTemplate = document.querySelector('.contacts');
 		this.detailsTemplate =  document.querySelector('.contact-view');
 		this.newContactTemplate = document.querySelector('.new-contact');
-		this.editTemplate = '';
+		this.editContactTemplate = document.querySelector('.edit-contact');
 
-		this.templates = [this.detailsTemplate, this.newContactTemplate]
+		this.templates = [this.detailsTemplate, this.newContactTemplate, this.editContactTemplate]
 
 		// bind methods 
 		this.showDetails = this.showDetails.bind(this);
@@ -254,9 +265,28 @@ class View {
 
 	// write code to display contact to edit in a form
 	showEditTemplate(contact) {
-		console.log(contact);
+		this.hideTemplates();
+		this.clearTemplate(this.editContactTemplate);
+		this.editContactTemplate.innerHTML += `
+			<div class="details-header">
+				<button class="back-btn js-remove-template"></button>				
+			</div>
+			<div class="edit-contact-body">
+				<h3 class="text-title">edit contact :</h3>
+				<div class="contact-form-block">
+					<form class="edit-contact-form">
+						<input type="text" class="edit-contact-name" value="${contact.name}" placeholder="Name" autofocus required />
+						<input type="phone" class="edit-contact-phone" value="${contact.phone}" placeholder="Phone" required />
+						<input type="email" class="edit-contact-email" value="${contact.email}" placeholder="Email" required />
+						<button type="submit" class="js-save-contact" data-key="${contact.id}">Save</button>
+					</form>
+				</div>
+			</div>
+		`;
+		this.showTemplate(this.editContactTemplate);
+		this.getUtilButtons();
+		form.getEditedContactInputs();
 	}
-
 
 	hideTemplates() {
 		this.defaultTemplate.style.display = 'none';
@@ -293,6 +323,7 @@ class View {
 }
 
 
+// Helper functions 
 
 function validateData(name, phone) {
 	if(name = '' && name.length > 20) return false;
@@ -316,13 +347,20 @@ function generateId() {
 	return id;
 }
 
+
+
+// Form class handles form inputs for both new and edited contacts 
+
 class Form {
 	constructor() {
 		this.getNewContactInputs();
 		this.AddNewForm = document.querySelector('.contact-form');
 
+
 		this.getNewContactValues = this.getNewContactValues.bind(this);
 		this.getNewContactInputs = this.getNewContactInputs.bind(this);
+		this.getEditedContactInputs = this.getEditedContactInputs.bind(this);
+		this.getEditedContactValues = this.getEditedContactValues.bind(this);
 		// this.validateData = this.validateData.bind(this);
 		// this.generateId = this.generateId.bind(this);
 		this.clearInputValues = this.clearInputValues.bind(this);
@@ -333,6 +371,17 @@ class Form {
 
 	addEventListeners() {
 		this.AddNewForm.addEventListener('submit', Form.getNewContactValues);
+	}
+
+	getEditedContactInputs() {
+		this.editOldForm = document.querySelector('.edit-contact-form');
+		this.editNameInput = document.querySelector('.edit-contact-name');
+		this.editPhoneInput = document.querySelector('.edit-contact-phone');
+		this.editEmailInput = document.querySelector('.edit-contact-email');
+		this.SubmitEditedContact = document.querySelector('.js-edit-contact');
+
+		this.editOldForm.addEventListener('submit', this.getEditedContactValues);
+		App.attachListenerAndCallback(this.SubmitEditedContact, 'click', this.getEditedContactValues);
 	}
 
 	getNewContactInputs() {
@@ -366,6 +415,29 @@ class Form {
 		}
 	}
 
+	getEditedContactValues(e) {
+		e.preventDefault();
+		console.log('getting edited contact values');
+		let id = document.querySelector('.js-save-contact').dataset.key;
+		let [name, phone, email] = [this.editNameInput.value, this.editPhoneInput.value, this.editEmailInput.value];
+
+		// validate inputs
+		let result_ok = validateData(name, phone);
+		if(result_ok) {
+			let contact = {
+				id,
+				name,
+				phone,
+				email,
+				avatarUrl: './assets/images/avatar.jpg',
+				backgroundUrl: '../images/avatar.jpg'
+			}
+			this.clearInputValues(this.editNameInput, this.editPhoneInput, this.editEmailInput);
+			App.view.removeTemplates();
+			App.addEditedContact(contact);
+		}
+	}
+
 	clearInputValues(...inputs) {
 		inputs.forEach(input => input.value = " ");
 	}
@@ -376,17 +448,9 @@ var App = new AddressBook('shadrach', contacts);
 App.view = new View();
 var form = new Form();
 
-// let values = [...contactList.values()];
-// let keys = [...contactList.keys()];
-// let entries = [...contactList.entries()];
+// Todos: 
 
-// console.log(entries)
-
-// contactList.delete('19a');
-
-// for(key of keys) {
-// 	if(contactList.has(key)) {
-// 		let { name, phone} =  contactList.get(key);
-// 		console.log(name, phone);
-// 	}
-// }
+// Add Icons to form and change form view in response to screen size
+// Responsive images for the main view or no images at all;
+// Change all icons to svg format make the action icons white with almost transparent backgrounds
+// work on the app shell model

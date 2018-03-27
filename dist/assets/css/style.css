@@ -73,6 +73,7 @@ body {
 	top: 5px;
 	left: 5px;
 	padding: .5rem;
+	visibility: hidden;
 	cursor: pointer;
 }
 
@@ -609,6 +610,47 @@ input:focus::-ms-input-placeholder {
 input:focus::placeholder {
 	color: var(--color-light-black);
 }
+
+
+/*styling for edit contact template */
+
+.edit-contact {
+	width: 100vw;
+	height: 100vh;
+	padding: 0;
+	display: none;
+	background-color: var(--color-dark-white);
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 2;
+}
+
+.edit-contact-body {
+	padding: 2rem;
+}
+
+.edit-contact-form { 
+	display: -webkit-box; 
+	display: -ms-flexbox; 
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+	-ms-flex-line-pack: distribute;
+	    align-content: space-around;
+}
+
+.text-title {
+	font-size: 2rem;
+	text-transform: uppercase;
+	color: var(--color-dark-grey);
+}
+
 
 
 .active-template {
