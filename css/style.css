@@ -214,7 +214,7 @@ body {
 }
 
 .contact-details {
-	flex: 2;
+	flex: 1;
 	display: flex;
 	flex-direction: column;
 }
@@ -295,10 +295,12 @@ body {
 		/*visibility: hidden;*/
 		background-color: transparent;
 		background-image: url(../images/black-eye.svg);
+		background-position: right center;
 		background-repeat: no-repeat;
 		background-size: 2rem;
 		box-shadow: none;
-		padding: 1rem;
+		padding: .2rem;
+		margin: 0;
 		color: transparent;
 		transform: none;
 		outline-color: transparent;
@@ -499,7 +501,7 @@ ul.details-list {
 	margin: 0 0 1.5rem 0;
 	display: inline-block;
 	font-size: 2rem;
-	color: var(--color-light-grey);
+	color: var(--color-black);
 }
 
 .contact-form-block {
@@ -542,7 +544,7 @@ button[type="submit"]:hover {
 }
 
 input::placeholder {
-	color: var(--color-light-black);
+	color: var(--color-black);
 	letter-spacing: 2px;
 }
 

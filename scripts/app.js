@@ -270,7 +270,7 @@ class View {
 		this.hideTemplates();
 		this.clearTemplate(this.editContactTemplate);
 		this.editContactTemplate.innerHTML += `
-			<div class="details-header">
+			<div class="details-header" style="background-image: url(${contact.backgroundUrl})">
 				<button class="back-btn js-remove-template"></button>				
 			</div>
 			<div class="edit-contact-body">
@@ -421,18 +421,21 @@ class Form {
 		e.preventDefault();
 		console.log('getting edited contact values');
 		let id = document.querySelector('.js-save-contact').dataset.key;
+		console.log(id);
+
 		let [name, phone, email] = [this.editNameInput.value, this.editPhoneInput.value, this.editEmailInput.value];
 
 		// validate inputs
 		let result_ok = validateData(name, phone);
 		if(result_ok) {
+			let editedContact = App.contactData.get(id);
 			let contact = {
 				id,
 				name,
 				phone,
 				email,
-				avatarUrl: './assets/images/avatar.jpg',
-				backgroundUrl: '../images/avatar.jpg'
+				avatarUrl: editedContact.avatarUrl ? editedContact.avatarUrl : './assets/images/avatar.jpg',
+				backgroundUrl: editedContact.backgroundUrl ? editedContact.backgroundUrl : '../images/avatar.jpg'
 			}
 			this.clearInputValues(this.editNameInput, this.editPhoneInput, this.editEmailInput);
 			App.view.removeTemplates();
