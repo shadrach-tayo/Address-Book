@@ -162,7 +162,7 @@ body {
 
 .contacts {
 	min-height: 200px;
-	width: 80%;
+	width: 100%;
 	max-width: 900px;
 	display: -webkit-box;
 	display: -ms-flexbox;
@@ -174,16 +174,13 @@ body {
 	-ms-flex-wrap: nowrap;
 	    flex-wrap: nowrap;
 	padding: 1rem .5rem;
-	margin: 1rem auto;
+	margin: .2rem auto;
 	-ms-flex-line-pack: center;
 	    align-content: center;
 	-webkit-box-align: center;
 	    -ms-flex-align: center;
 	        align-items: center;
 	border: none;
-	border-radius: .5rem;
-	-webkit-box-shadow: 0 .3rem 1rem var(--color-light-grey);
-	        box-shadow: 0 .3rem 1rem var(--color-light-grey);
 	display: block;
 	-webkit-transition: all .3s ease-in;
 	transition: all .3s ease-in;
@@ -313,16 +310,18 @@ body {
 /* styling for add contact button */
 .add-contact {
 	position: fixed;
-	bottom: 1rem;
-	right: 1rem;
-	width: 4rem;
-	height: 4rem;
+	bottom: 1.5rem;
+	right: 1.5rem;
+	width: 3rem;
+	height: 3rem;
 	padding: .5rem;
 	border-radius: 50%;
 	border: none;
 	background-color: var(--color-dark-purple);
-	background-image: url(../images/add-contact.png);
+	background-image: url(../images/add-contact.svg);
 	background-repeat: no-repeat;
+	background-size: 2rem;
+	/*color: white;*/
 	background-position: center;
 	cursor: pointer;
 	-webkit-transition: all .3s ease-in;
@@ -340,15 +339,40 @@ body {
 		display: none;
 	}
 
-	.contact:not(:last-child)::after {
-		display: none;
-	}
-
 	.contact-btn {
-		width: 4rem;
-		letter-spacing: normal;
+		/*visibility: hidden;*/
+		background-color: transparent;
+		background-image: url(../images/black-eye.svg);
+		background-repeat: no-repeat;
+		background-size: 2rem;
+		-webkit-box-shadow: none;
+		        box-shadow: none;
+		padding: 1rem;
+		color: transparent;
+		-webkit-transform: none;
+		        transform: none;
+		outline-color: transparent;
 	}
 
+	.contact-btn:hover {
+		-webkit-transform: none;
+		        transform: none;
+	}
+
+}
+
+@media screen and (min-width: 401px) {
+	.contacts {
+		width: 80%;
+		border-radius: .5rem;
+		-webkit-box-shadow: 0 .3rem 1rem var(--color-light-grey);
+		        box-shadow: 0 .3rem 1rem var(--color-light-grey);
+	}
+
+	.add-contact {
+		width: 3.5rem;
+		height: 3.5rem;
+	}
 }
 
 @media screen and (min-width: 750px) {
@@ -380,8 +404,9 @@ body {
 	border-radius: 50%;
 	border: none;
 	background-color: var(--color-light-black);
-	background-image: url(../images/left-arrow.png);
+	background-image: url(../images/left-arrow-key.svg);
 	background-position: center;
+	background-size: 2rem;
 	background-repeat: no-repeat;
 	/*background-size: cover;*/
 	cursor: pointer;
@@ -434,7 +459,8 @@ body {
 	border-radius: 50%;
 	border: none;
 	background-color: var(--color-light-black);
-	background-image: url(../images/pencil-edit-button.png);
+	background-image: url(../images/create-new-pencil.svg);
+	background-size: 2rem;
 	background-position: center;
 	background-repeat: no-repeat;
 	/*background-size: cover;*/
@@ -450,7 +476,8 @@ body {
 	border-radius: 50%;
 	border: none;
 	background-color: var(--color-light-black);
-	background-image: url(../images/trash.png);
+	background-image: url(../images/delete.svg);
+	background-size: 2rem;
 	background-position: center;
 	background-repeat: no-repeat;
 	/*background-size: cover;*/

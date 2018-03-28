@@ -181,16 +181,17 @@ class AddressBook {
 
 
 var contacts = [
-	{id: '11a', name: 'Adeokun Victory', phone: +23418933925, email: 'adeokun.victory@gmail.com', avatarUrl: './assets/images/avatar.jpg', backgroundUrl: '../images/avatar.jpg'},
-	{id: '12a', name: 'Kelvin Doe', phone: +23418933925, email: 'kelvindoe@gmail.com', avatarUrl: './assets/images/avatar.jpg', backgroundUrl: '../images/avatar.jpg'},
-	{id: '13a', name: 'Jemimah Samuel', phone: +23418933925, email: 'Jemimahsamuel@gmail.com', avatarUrl: './assets/images/avatar.jpg', backgroundUrl: '../images/avatar.jpg'},
-	{id: '14a', name: 'Duyile John', phone: +23418933925, email: 'duyilejohn@gmail.com', avatarUrl: './assets/images/avatar.jpg', backgroundUrl: '../images/avatar.jpg'},
-	{id: '15a', name: 'Shadrach Morgan', phone: +23418933925, phone2: +35982359852, email: 'shadrachmorgan@gmail.com', avatarUrl: './assets/images/avatar.jpg', backgroundUrl: '../images/avatar.jpg'},
-	{id: '16a', name: 'James Bond', phone: +23418933925, email: 'shadrachbond@gmail.com', avatarUrl: './assets/images/avatar.jpg', backgroundUrl: '../images/avatar.jpg'},
-	{id: '17a', name: 'Brandy Morgan', phone: +23418933925, email: 'brandymorgan@gmail.com', avatarUrl: './assets/images/avatar.jpg', backgroundUrl: '../images/avatar.jpg'},
-	{id: '18a', name: 'Zoey felix', phone: +23418933925, email: 'zoeyfelix@gmail.com', avatarUrl: './assets/images/avatar.jpg', backgroundUrl: '../images/avatar.jpg'},
-	{id: '19a', name: 'Chris Sean', phone: +23418933925, email: 'chrissean@gmail.com', avatarUrl: './assets/images/avatar.jpg', backgroundUrl: '../images/avatar.jpg'},
-	{id: '11b', name: 'Lydia Hallie', phone: +23418933925, email: 'lydiahallie@gmail.com', avatarUrl: './assets/images/avatar.jpg', backgroundUrl: '../images/avatar.jpg'}
+	{id: '16a', name: 'Shadrach Temitayo', phone: +2348146023912, email: 'shadrachtemitayo@gmail.com', avatarUrl: './assets/images/shadrach.jpg', backgroundUrl: '../images/shadrach-bg.jpeg'},
+	{id: '11a', name: 'Dan Abramov', phone: +23418933925, email: 'danabramov@gmail.com', avatarUrl: './assets/images/dan-abramov.jpg', backgroundUrl: '../images/dan-abramov.jpg'},
+	{id: '12a', name: 'kyle Simpson', phone: +23418933925, email: 'kylesimpson@gmail.com', avatarUrl: './assets/images/getify.jpg', backgroundUrl: '../images/getify.jpg'},
+	{id: '13a', name: 'Sophie Alpert', phone: +23418933925, email: 'sophiealpert@gmail.com', avatarUrl: './assets/images/sophie.jpg', backgroundUrl: '../images/sophie-bg.jpg'},
+	{id: '14a', name: 'Josh Pagley', phone: +23418933925, email: 'joshpagley@gmail.com', avatarUrl: './assets/images/jpegley.jpg', backgroundUrl: '../images/jpegley-bg.jpg'},
+	{id: '15a', name: 'Paul Lewis', phone: +23418933925, email: 'paul.lewis@gmail.com', avatarUrl: './assets/images/paul-lewis.jpg', backgroundUrl: '../images/paul-lewis-bg.jpg'},
+	{id: '17a', name: 'Msbrandy Morgan', phone: +23418933925, email: 'brandymorgan@gmail.com', avatarUrl: './assets/images/msbrandymorgan.jpg', backgroundUrl: '../images/msbrandymorgan-bg.jpg'},
+	{id: '18a', name: 'Nicholas Zakas', phone: +23418933925, email: 'nicholas@gmail.com', avatarUrl: './assets/images/zakas.jpg', backgroundUrl: '../images/zakas-bg.jpg'},
+	{id: '19a', name: 'Chris Sean', phone: +23418933925, email: 'chrissean@gmail.com', avatarUrl: './assets/images/chris-sean.jpg', backgroundUrl: '../images/chris-sean-bg.jpg'},
+	{id: '11b', name: 'Lydia Hallie', phone: +23418933925, email: 'lydiahallie@gmail.com', avatarUrl: './assets/images/lydia-hallie.jpg', backgroundUrl: '../images/lydia-hallie-bg.jpg'},
+	{id: '11b', name: 'Ryan Florence', phone: +23418933925, email: 'ryan@gmail.com', avatarUrl: './assets/images/ryan.jpg', backgroundUrl: '../images/ryan-bg.jpg'}
 ];
 
 
@@ -452,6 +453,8 @@ var form = new Form();
 // Todos: 
 
 // Add Icons to form and change form view in response to screen size
-// Responsive images for the main view or no images at all;
+// Responsive images for the main view or no images at all --- done;
 // Change all icons to svg format make the action icons white with almost transparent backgrounds
 // work on the app shell model
+// get 2 images each of the following people 'lydia hallie', 'chris sean', 'msbrandymorgan', 
+// --> jpegley', 'dan abramov', 'kyle simpsons', nicholas zakas, paul lewis, sophie alpert, ryan florence ------ done;

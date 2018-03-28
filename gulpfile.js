@@ -13,7 +13,7 @@ const path = {
 		dest: 'dist/assets/css'
 	},
 	images: {
-		src: 'images/*.{jpg,jpeg,png}',
+		src: 'images/*.{jpg,jpeg,png,svg}',
 		dest: 'dist/assets/images'
 	},
 	scripts: {
