@@ -191,7 +191,7 @@ var contacts = [
 	{id: '18a', name: 'Nicholas Zakas', phone: +23418933925, email: 'nicholas@gmail.com', avatarUrl: './assets/images/zakas.jpg', backgroundUrl: '../images/zakas-bg.jpg'},
 	{id: '19a', name: 'Chris Sean', phone: +23418933925, email: 'chrissean@gmail.com', avatarUrl: './assets/images/chris-sean.jpg', backgroundUrl: '../images/chris-sean-bg.jpg'},
 	{id: '11b', name: 'Lydia Hallie', phone: +23418933925, email: 'lydiahallie@gmail.com', avatarUrl: './assets/images/lydia-hallie.jpg', backgroundUrl: '../images/lydia-hallie-bg.jpg'},
-	{id: '11b', name: 'Ryan Florence', phone: +23418933925, email: 'ryan@gmail.com', avatarUrl: './assets/images/ryan.jpg', backgroundUrl: '../images/ryan-bg.jpg'}
+	{id: '11c', name: 'Ryan Florence', phone: +23418933925, email: 'ryan@gmail.com', avatarUrl: './assets/images/ryan.jpg', backgroundUrl: '../images/ryan-bg.jpg'}
 ];
 
 
@@ -271,7 +271,10 @@ class View {
 		this.clearTemplate(this.editContactTemplate);
 		this.editContactTemplate.innerHTML += `
 			<div class="details-header" style="background-image: url(${contact.backgroundUrl})">
-				<button class="back-btn js-remove-template"></button>				
+				<button class="back-btn js-remove-template"></button>
+				<div class="action-buttons">
+					<button type="submit" class="js-save-contact" data-key="${contact.id}"></button>
+				</div>
 			</div>
 			<div class="edit-contact-body">
 				<h3 class="text-title">edit contact :</h3>
@@ -280,7 +283,6 @@ class View {
 						<input type="text" class="edit-contact-name" value="${contact.name}" placeholder="Name" autofocus required />
 						<input type="phone" class="edit-contact-phone" value="${contact.phone}" placeholder="Phone" required />
 						<input type="email" class="edit-contact-email" value="${contact.email}" placeholder="Email" required />
-						<button type="submit" class="js-save-contact" data-key="${contact.id}">Save</button>
 					</form>
 				</div>
 			</div>
@@ -380,7 +382,7 @@ class Form {
 		this.editNameInput = document.querySelector('.edit-contact-name');
 		this.editPhoneInput = document.querySelector('.edit-contact-phone');
 		this.editEmailInput = document.querySelector('.edit-contact-email');
-		this.SubmitEditedContact = document.querySelector('.js-edit-contact');
+		this.SubmitEditedContact = document.querySelector('.js-save-contact');
 
 		this.editOldForm.addEventListener('submit', this.getEditedContactValues);
 		App.attachListenerAndCallback(this.SubmitEditedContact, 'click', this.getEditedContactValues);
@@ -455,9 +457,10 @@ var form = new Form();
 
 // Todos: 
 
-// Add Icons to form and change form view in response to screen size
+// Get Icons for the app shell model, user default icon;
+// Add Icons to form and change form view in response to screen size --------> done;
 // Responsive images for the main view or no images at all --- done;
-// Change all icons to svg format make the action icons white with almost transparent backgrounds
+// Change all icons to svg format make the action icons white with almost transparent backgrounds ------> done
 // work on the app shell model
 // get 2 images each of the following people 'lydia hallie', 'chris sean', 'msbrandymorgan', 
 // --> jpegley', 'dan abramov', 'kyle simpsons', nicholas zakas, paul lewis, sophie alpert, ryan florence ------ done;
