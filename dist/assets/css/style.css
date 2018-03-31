@@ -614,6 +614,28 @@ ul.details-list {
 	    align-content: space-around;
 }
 
+.add-image {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+
+.add-image input {
+	opacity: 0;
+}
+
+.add-image label {
+	width: 4rem;
+	height: 4rem;
+	background-color: var(--color-dark-purple);
+	border-radius: 50%;
+	border: none;
+	position: absolute;
+	pointer-events: none;
+	right: 1rem;
+	top: 2rem;
+}
+
 input {
 	margin: .5rem 0;
 	padding: .8rem 1rem;
