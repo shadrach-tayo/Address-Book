@@ -547,6 +547,10 @@ ul.details-list {
 	width: 4rem;
 	height: 4rem;
 	background-color: var(--color-dark-purple);
+	background-image: url(../images/photo-camera.svg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 2rem;
 	border-radius: 50%;
 	border: none;
 	position: absolute;

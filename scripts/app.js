@@ -352,6 +352,18 @@ function generateId() {
 }
 
 
+// async function getImageUrl(files) {
+// 		let reader = new FileReader();
+// 		reader.onload = async () => {
+// 			url = await reader.result;
+// 			return url;
+// 		}
+		
+// 		for(let i = 0; i < files.length; i++) {
+// 			reader.readAsDataURL(files[i]);
+// 		}
+
+// 	}
 
 // Form class handles form inputs for both new and edited contacts 
 
@@ -361,6 +373,7 @@ class Form {
 		this.AddNewForm = document.querySelector('.contact-form');
 
 
+		// this.getImageUrl = this.getImageUrl.bind(this);
 		this.getNewContactValues = this.getNewContactValues.bind(this);
 		this.getNewContactInputs = this.getNewContactInputs.bind(this);
 		this.getEditedContactInputs = this.getEditedContactInputs.bind(this);
@@ -375,6 +388,8 @@ class Form {
 
 	addEventListeners() {
 		this.AddNewForm.addEventListener('submit', Form.getNewContactValues);
+		this.newImageInput.addEventListener('change', getImageUrl(this.newImageInput.files));	
+
 	}
 
 	getEditedContactInputs() {
@@ -392,8 +407,10 @@ class Form {
 		this.newNameInput = document.querySelector('.new-contact-name');
 		this.newPhoneInput = document.querySelector('.new-contact-phone');
 		this.newEmailInput = document.querySelector('.new-contact-email');
+		this.newImageInput = document.querySelector('.new-contact-avatar');
 		this.newContactSubmit = document.querySelector('.js-new-contact');
 
+		this.newImageInput.addEventListener('change', getImageUrl(this.newImageInput.files));	
 		App.attachListenerAndCallback(this.newContactSubmit, 'click', this.getNewContactValues);
 	}
 
@@ -401,7 +418,6 @@ class Form {
 		e.preventDefault();
 		// this.newContactValues = [this.newNameInput.value, this.newPhoneInput.value, this.newEmailInput.value];
 		let [name, phone, email] = [document.querySelector('.new-contact-name').value, document.querySelector('.new-contact-phone').value, document.querySelector('.new-contact-email').value];
-
 		let result_ok = validateData(name, phone);
 		if(result_ok) {
 			let id = generateId();
@@ -410,7 +426,7 @@ class Form {
 				name,
 				phone,
 				email,
-				avatarUrl: './assets/images/avatar.jpg',
+				avatarUrl: '../images/avatar.jpg',
 				backgroundUrl: '../images/avatar.jpg'
 			}
 			this.clearInputValues(this.newNameInput, this.newPhoneInput, this.newEmailInput);
