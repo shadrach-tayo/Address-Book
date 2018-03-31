@@ -10,4 +10,5 @@ var contacts = [
 	{id: '19a', name: 'Chris Sean', phone: +23418933925, email: 'chrismorgan@gmail.com', avatar: './images/chris.jpg'},
 	{id: '11b', name: 'Lydia Hallie', phone: +23418933925, email: 'lydiamorgan@gmail.com', avatar: './images/lydia.jpg'}
 ];
-
+ 
+export default contacts;

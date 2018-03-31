@@ -30,6 +30,10 @@ body {
 	overflow-x: hidden;
 }
 
+/*.no-scroll {
+	overflow: hidden;
+}*/
+
 @media screen and (min-width: 768px) {
 	html {
 		font-size: 16px;
@@ -67,16 +71,20 @@ body {
 	z-index: 1;
 }
 
-/*.sidenav-toggle {
+.sidenav-toggle {
 	display: inline-block;
 	float: left;
 	position: relative;
-	top: 5px;
+	top: 0;
 	left: 5px;
-	padding: .5rem;
-	visibility: hidden;
+	padding: .2rem;
+	background: transparent;
+	border: none;
+	color: #fff;
+	font-size: 2rem;
 	cursor: pointer;
-}*/
+	outline: none;
+}
 
 .app-name {
 	font-size: 1.8rem;
@@ -87,8 +95,9 @@ body {
 }
 
 .owner-avatar {
-	float: right;
-	margin-right: 1rem;
+	position: absolute;
+	right: 10px;
+	top: 5px;
 }
 
 .avatar {
@@ -97,56 +106,66 @@ body {
 	border-radius: 50%;
 }
 
+.sidenav-container {
+	width: 100vw;
+	height: 100vh;
+	background: var(--color-light-black);
+	opacity: 0;
+	position: fixed;
+	top: 0;
+	lef: 0;
+	pointer-events: none;
+	-webkit-transition: .3s;
+	transition: .3s;
+	z-index: 3;
+	
+}
 
-.sidenav {
+.sidenav-container.open {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+
+.sidenav-container .sidenav {
 	width: 70vw;
 	min-width: 200px;
 	max-width: 300px;
 	height: 100vh;
-	background: var(--color-white);
-	position: absolute;
+	background: var(--color-light-black);
 	top: 0;
 	left: 0;
 	will-change: transform;
 	-webkit-transform: translateX(-100%);
 	        transform: translateX(-100%);
-	-webkit-transition: all .3s ease-in;
-	transition: all .3s ease-in;
-	pointer-events: none;
+	-webkit-transition: all .3s;
+	transition: all .3s;
 	z-index: 3;
 }
 
-.sidenav.open {
+.sidenav-container.open .sidenav {
 	-webkit-transform: none;
 	        transform: none;
 }
 
-
-.sidenav::after {
+.sidenav-container::after {
 	content: "";
 	display: block;
 	width: 100vw;
 	height: 100%;
-	background-color: rgba(0, 0, 0, 0.7);
-	position: absolute;
+	background-color: rgba(0, 0, 0, 0.4);
+	position: fixed;
 	top: 0;
 	left: 0;
-	opacity: 0;
-	-webkit-transition: all .3s ease-in;
-	transition: all .3s ease-in;
-}
-
-.sidenav.open::after {
-	content: "";
-	display: block;
-	width: 100vw;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.7);
-	position: absolute;
-	top: 0;
-	left: 0;
+	will-change: opacity;
 	opacity: 1;
 	z-index: -1;
+	-webkit-transition: opacity .3s cubic-bezier(0, 0, 0.3, 1);
+	transition: opacity .3s cubic-bezier(0, 0, 0.3, 1);
+}
+
+.sidenav-container.open ::after {
+	opacity: 1;
 }
 
 .sidenav-header {
@@ -154,6 +173,18 @@ body {
 	height: 30%;
 	background-image: -webkit-gradient(linear, left top, right bottom, from(var(--color-light-purple)), to(var(--color-dark-purple)));
 	background-image: linear-gradient(to right bottom, var(--color-light-purple), var(--color-dark-purple));
+}
+
+.sidenav-header--user-image {
+	margin: 0 auto;
+	width: 90px;
+	height: 90px;
+	border-radius: 50%;
+}
+
+.sidenav-content {
+	height: 70%;
+	background-color: var(--color-light-grey);
 }
 
 
@@ -322,7 +353,7 @@ body {
 	background-image: url(../images/add-contact.svg);
 	background-repeat: no-repeat;
 	background-size: 2rem;
-	/*color: white;*/
+	background-clip: border-box;
 	background-position: center;
 	cursor: pointer;
 	-webkit-transition: all .3s ease-in;
@@ -770,8 +801,6 @@ input:focus::placeholder {
 	text-transform: uppercase;
 	color: var(--color-black);
 }
-
-
 
 .active-template {
 	top: 0;

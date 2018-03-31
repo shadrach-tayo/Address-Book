@@ -1,3 +1,4 @@
+
 class AddressBook {
 	constructor(name, contacts) {
 		// firstclass props
@@ -457,7 +458,8 @@ var form = new Form();
 
 // Todos: 
 
-// Get Icons for the app shell model, user default icon;
+// Get Icons for the app shell model, user default icon ---> done, nav-bar icon;
+
 // Add Icons to form and change form view in response to screen size --------> done;
 // Responsive images for the main view or no images at all --- done;
 // Change all icons to svg format make the action icons white with almost transparent backgrounds ------> done

@@ -9,17 +9,23 @@
 </head>
 <body>
 <div class="header text-center">
-	<!-- <button class="js_sideNav_toggle sidenav-toggle">toggle</button> -->
+	<button class="js_sideNav_toggle sidenav-toggle">
+		<i class="fas fa-bars"></i>
+	</button>
 	<span class="app-name">Address Book</span>
 	<div class="owner-avatar">
-		<img class="app-owner-avater avatar" src="./assets/images/user-icon.svg" alt="owner-avatar"></img>
+		<img class="app-owner-avater avatar" src="./assets/images/default-user.png" alt="owner-avatar"></img>
 	</div>
 </div>
-<div class="sidenav js-side-nav">
-	<div class="sidenav-header"></div>
-	<div class="sidenav-content"></div>
-	<div class="sidenav-footer"></div>
-</div>
+<aside class="sidenav-container">
+	<nav class="sidenav js-side-nav">
+		<div class="sidenav-header">
+				<img src="./assets/images/shadrach.jpg" class="sidenav-header--user-image">	
+		</div>
+		<div class="sidenav-content"></div>
+	</nav>
+</aside>
+
 <button class="add-contact js-add-contact"></button>
 
 <div class="contacts">
@@ -109,6 +115,9 @@
 		<span class="author-name"></span>
 	</h2>
 </footer>
+<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+<script type="module" src="./assets/js/Data.js"></script>
 <script type="text/javascript" src="./assets/js/app.js"></script>
+<script type="module" src="./assets/js/index.js"></script>
 </body>
 </html>
