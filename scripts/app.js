@@ -352,21 +352,50 @@ function generateId() {
 }
 
 
-// async function getImageUrl(files) {
-// 		let reader = new FileReader();
-// 		reader.onload = async () => {
-// 			url = await reader.result;
-// 			return url;
-// 		}
+async function getImageUrl(files) {
+		let reader = new FileReader();
+		reader.onload = async () => {
+			url = await reader.result;
+			console.log(url);
+			return url;
+		}
 		
-// 		for(let i = 0; i < files.length; i++) {
-// 			reader.readAsDataURL(files[i]);
-// 		}
+		for(let i = 0; i < files.length; i++) {
+			reader.readAsDataURL(files[i]);
+		}
 
-// 	}
+	}
+
+
+async function getNewContactValues(e) {
+		e.preventDefault();
+		// this.newContactValues = [this.newNameInput.value, this.newPhoneInput.value, this.newEmailInput.value];
+		let [name, phone, email] = [document.querySelector('.new-contact-name').value, document.querySelector('.new-contact-phone').value, document.querySelector('.new-contact-email').value];
+		let imageUrl = form.newImageUrl;
+		if(!form.newImageUrl) {
+			imageUrl = await getImageUrl(form.newImageInput.files);
+		}
+
+		let result_ok = await validateData(name, phone);
+		
+		if(result_ok) {
+			let id = generateId();
+			let contact = {
+				id,
+				name,
+				phone,
+				email,
+				avatarUrl: await imageUrl,
+				backgroundUrl: '../images/avatar.jpg'
+			}
+			this.clearInputValues(this.newNameInput, this.newPhoneInput, this.newEmailInput);
+			App.view.removeTemplates();
+			App.addNewContact(contact);
+		}
+		
+	}
 
 // Form class handles form inputs for both new and edited contacts 
-
 class Form {
 	constructor() {
 		this.getNewContactInputs();
@@ -374,7 +403,7 @@ class Form {
 
 
 		// this.getImageUrl = this.getImageUrl.bind(this);
-		this.getNewContactValues = this.getNewContactValues.bind(this);
+		this.getNewContactValues = getNewContactValues.bind(this);
 		this.getNewContactInputs = this.getNewContactInputs.bind(this);
 		this.getEditedContactInputs = this.getEditedContactInputs.bind(this);
 		this.getEditedContactValues = this.getEditedContactValues.bind(this);
@@ -414,26 +443,7 @@ class Form {
 		App.attachListenerAndCallback(this.newContactSubmit, 'click', this.getNewContactValues);
 	}
 
-	getNewContactValues(e) {
-		e.preventDefault();
-		// this.newContactValues = [this.newNameInput.value, this.newPhoneInput.value, this.newEmailInput.value];
-		let [name, phone, email] = [document.querySelector('.new-contact-name').value, document.querySelector('.new-contact-phone').value, document.querySelector('.new-contact-email').value];
-		let result_ok = validateData(name, phone);
-		if(result_ok) {
-			let id = generateId();
-			let contact = {
-				id,
-				name,
-				phone,
-				email,
-				avatarUrl: '../images/avatar.jpg',
-				backgroundUrl: '../images/avatar.jpg'
-			}
-			this.clearInputValues(this.newNameInput, this.newPhoneInput, this.newEmailInput);
-			App.view.removeTemplates();
-			App.addNewContact(contact);
-		}
-	}
+	
 
 	getEditedContactValues(e) {
 		e.preventDefault();
