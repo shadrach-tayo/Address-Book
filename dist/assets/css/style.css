@@ -692,10 +692,6 @@ button[type="submit"] {
 	cursor: pointer;
 }
 
-/*button[type="submit"]:hover {
-	background-color: #A337C7AF;
-}*/
-
 input::-webkit-input-placeholder {
 	color: var(--color-black);
 	letter-spacing: 2px;
