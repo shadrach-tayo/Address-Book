@@ -275,6 +275,10 @@ class View {
 				<div class="action-buttons">
 					<button type="submit" class="js-save-contact" data-key="${contact.id}"></button>
 				</div>
+				<div class="add-image">
+					<label for="edit contact image" class="file-label"></label>
+					<input type="file" class="edit-contact-avatar"></input>
+				</div>
 			</div>
 			<div class="edit-contact-body">
 				<h3 class="text-title">edit contact :</h3>
@@ -352,63 +356,22 @@ function generateId() {
 }
 
 
-async function getImageUrl(files) {
-		let reader = new FileReader();
-		reader.onload = async () => {
-			url = await reader.result;
-			console.log(url);
-			return url;
-		}
-		
-		for(let i = 0; i < files.length; i++) {
-			reader.readAsDataURL(files[i]);
-		}
 
-	}
-
-
-async function getNewContactValues(e) {
-		e.preventDefault();
-		// this.newContactValues = [this.newNameInput.value, this.newPhoneInput.value, this.newEmailInput.value];
-		let [name, phone, email] = [document.querySelector('.new-contact-name').value, document.querySelector('.new-contact-phone').value, document.querySelector('.new-contact-email').value];
-		let imageUrl = form.newImageUrl;
-		if(!form.newImageUrl) {
-			imageUrl = await getImageUrl(form.newImageInput.files);
-		}
-
-		let result_ok = await validateData(name, phone);
-		
-		if(result_ok) {
-			let id = generateId();
-			let contact = {
-				id,
-				name,
-				phone,
-				email,
-				avatarUrl: await imageUrl,
-				backgroundUrl: '../images/avatar.jpg'
-			}
-			this.clearInputValues(this.newNameInput, this.newPhoneInput, this.newEmailInput);
-			App.view.removeTemplates();
-			App.addNewContact(contact);
-		}
-		
-	}
 
 // Form class handles form inputs for both new and edited contacts 
+
 class Form {
 	constructor() {
 		this.getNewContactInputs();
 		this.AddNewForm = document.querySelector('.contact-form');
 
 
-		// this.getImageUrl = this.getImageUrl.bind(this);
-		this.getNewContactValues = getNewContactValues.bind(this);
+		this.getImageUrl = this.getImageUrl.bind(this);
+		this.getNewContactValues = this.getNewContactValues.bind(this);
 		this.getNewContactInputs = this.getNewContactInputs.bind(this);
 		this.getEditedContactInputs = this.getEditedContactInputs.bind(this);
 		this.getEditedContactValues = this.getEditedContactValues.bind(this);
-		// this.validateData = this.validateData.bind(this);
-		// this.generateId = this.generateId.bind(this);
+		
 		this.clearInputValues = this.clearInputValues.bind(this);
 
 		this.getNewContactInputs()
@@ -416,20 +379,27 @@ class Form {
 	}
 
 	addEventListeners() {
-		this.AddNewForm.addEventListener('submit', Form.getNewContactValues);
-		this.newImageInput.addEventListener('change', getImageUrl(this.newImageInput.files));	
+		this.AddNewForm.addEventListener('submit', this.getNewContactValues);
 
-	}
+		this.newImageInput.addEventListener('change', () => {
+			this.getImageUrl(this.newImageInput.files, true);
+		});
+	} 
 
 	getEditedContactInputs() {
 		this.editOldForm = document.querySelector('.edit-contact-form');
 		this.editNameInput = document.querySelector('.edit-contact-name');
 		this.editPhoneInput = document.querySelector('.edit-contact-phone');
 		this.editEmailInput = document.querySelector('.edit-contact-email');
+		this.editImageInput = document.querySelector('.edit-contact-avatar');
 		this.SubmitEditedContact = document.querySelector('.js-save-contact');
 
 		this.editOldForm.addEventListener('submit', this.getEditedContactValues);
 		App.attachListenerAndCallback(this.SubmitEditedContact, 'click', this.getEditedContactValues);
+
+		this.editImageInput.addEventListener('change', () => {
+			this.getImageUrl(this.editImageInput.files);
+		})
 	}
 
 	getNewContactInputs() {
@@ -439,18 +409,57 @@ class Form {
 		this.newImageInput = document.querySelector('.new-contact-avatar');
 		this.newContactSubmit = document.querySelector('.js-new-contact');
 
-		this.newImageInput.addEventListener('change', getImageUrl(this.newImageInput.files));	
 		App.attachListenerAndCallback(this.newContactSubmit, 'click', this.getNewContactValues);
 	}
 
-	
+	getImageUrl(files, New = true) {
+		let reader = new FileReader();
+		reader.onloadend = async () => {
+			let url = await reader.result;
+			if(New) { 
+				this.newImageURL = url;
+			} else {
+				this.editImageURL = url;
+			}
+			console.log(url);
+		}
+		
+		for(let i = 0; i < files.length; i++) {
+			reader.readAsDataURL(files[i]);
+		}
+	}
 
+	getNewContactValues(e) {
+		e.preventDefault();
+
+		let [name, phone, email] = [document.querySelector('.new-contact-name').value, document.querySelector('.new-contact-phone').value, document.querySelector('.new-contact-email').value];
+		let imageUrl = this.newImageURL;
+		
+		let result_ok = validateData(name, phone);
+		
+		if(result_ok) {
+			let id = generateId();
+			let contact = {
+				id,
+				name,
+				phone,
+				email,
+				avatarUrl: imageUrl,
+				backgroundUrl: imageUrl
+			}
+
+			this.AddNewForm.reset();
+			App.view.removeTemplates();
+			App.addNewContact(contact);
+		}
+		
+	}
+	
 	getEditedContactValues(e) {
 		e.preventDefault();
-		console.log('getting edited contact values');
 		let id = document.querySelector('.js-save-contact').dataset.key;
-		console.log(id);
 
+		// get form values of the edited contact
 		let [name, phone, email] = [this.editNameInput.value, this.editPhoneInput.value, this.editEmailInput.value];
 
 		// validate inputs
@@ -462,10 +471,11 @@ class Form {
 				name,
 				phone,
 				email,
-				avatarUrl: editedContact.avatarUrl ? editedContact.avatarUrl : './assets/images/avatar.jpg',
-				backgroundUrl: editedContact.backgroundUrl ? editedContact.backgroundUrl : '../images/avatar.jpg'
+				avatarUrl: this.editImageURL ? this.editImageURL : editedContact.avatarUrl,
+				backgroundUrl: this.editImageURL ? this.editImageURL : editedContact.backgroundUrl,
 			}
-			this.clearInputValues(this.editNameInput, this.editPhoneInput, this.editEmailInput);
+
+			this.editOldForm.reset();
 			App.view.removeTemplates();
 			App.addEditedContact(contact);
 		}

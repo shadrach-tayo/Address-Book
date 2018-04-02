@@ -577,7 +577,7 @@ ul.details-list {
 	padding: 0;
 	display: none;
 	background-color: var(--color-dark-white);
-	position: absolute;
+	position: fixed;
 	top: 100%;
 	left: 0;
 	z-index: 3;
