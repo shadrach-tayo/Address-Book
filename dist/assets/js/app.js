@@ -86,6 +86,7 @@ class AddressBook {
 
 	showNewContactTemplate() {
 		this.view.showTemplate(this.view.newContactTemplate);
+		form.newDetailsHeader.style.backgroundImage = 'url(../images/hero.jpg)';
 	}
 
 	populateData() {
@@ -270,7 +271,7 @@ class View {
 		this.hideTemplates();
 		this.clearTemplate(this.editContactTemplate);
 		this.editContactTemplate.innerHTML += `
-			<div class="details-header" style="background-image: url(${contact.backgroundUrl})">
+			<div class="details-header edit-details-header" style="background-image: url(${contact.backgroundUrl})">
 				<button class="back-btn js-remove-template"></button>
 				<div class="action-buttons">
 					<button type="submit" class="js-save-contact" data-key="${contact.id}"></button>
@@ -333,8 +334,8 @@ class View {
 
 // Helper functions 
 
-function validateData(name, phone) {
-	if(name = '' && name.length > 20) return false;
+function *validateData(name, phone) {
+	if(name == '' && name.length > 30) return false;
 	let phoneReg = /[0-9]{11,14}/;
 	if(!phoneReg.test(phone)) return false
 
@@ -370,9 +371,10 @@ class Form {
 		this.getNewContactValues = this.getNewContactValues.bind(this);
 		this.getNewContactInputs = this.getNewContactInputs.bind(this);
 		this.getEditedContactInputs = this.getEditedContactInputs.bind(this);
-		this.getEditedContactValues = this.getEditedContactValues.bind(this);
-		
+		this.getEditedContactValues = this.getEditedContactValues.bind(this);	
 		this.clearInputValues = this.clearInputValues.bind(this);
+		this.changeNewImageBackground = this.changeNewImageBackground.bind(this);
+		this.changeEditedImageBackground = this.changeEditedImageBackground.bind(this);
 
 		this.getNewContactInputs()
 		this.addEventListeners();
@@ -384,7 +386,15 @@ class Form {
 		this.newImageInput.addEventListener('change', () => {
 			this.getImageUrl(this.newImageInput.files, true);
 		});
+	}
+
+	changeNewImageBackground() {
+		this.newDetailsHeader.style.backgroundImage = `url(${this.newImageURL})`;
 	} 
+
+	changeEditedImageBackground() {
+		this.editDetailsHeader.style.backgroundImage = `url(${this.editImageURL})`;
+	}
 
 	getEditedContactInputs() {
 		this.editOldForm = document.querySelector('.edit-contact-form');
@@ -392,13 +402,14 @@ class Form {
 		this.editPhoneInput = document.querySelector('.edit-contact-phone');
 		this.editEmailInput = document.querySelector('.edit-contact-email');
 		this.editImageInput = document.querySelector('.edit-contact-avatar');
+		this.editDetailsHeader = document.querySelector('.edit-details-header');
 		this.SubmitEditedContact = document.querySelector('.js-save-contact');
 
 		this.editOldForm.addEventListener('submit', this.getEditedContactValues);
 		App.attachListenerAndCallback(this.SubmitEditedContact, 'click', this.getEditedContactValues);
 
 		this.editImageInput.addEventListener('change', () => {
-			this.getImageUrl(this.editImageInput.files);
+			this.getImageUrl(this.editImageInput.files, false);
 		})
 	}
 
@@ -407,6 +418,7 @@ class Form {
 		this.newPhoneInput = document.querySelector('.new-contact-phone');
 		this.newEmailInput = document.querySelector('.new-contact-email');
 		this.newImageInput = document.querySelector('.new-contact-avatar');
+		this.newDetailsHeader = document.querySelector('.new-details-header');
 		this.newContactSubmit = document.querySelector('.js-new-contact');
 
 		App.attachListenerAndCallback(this.newContactSubmit, 'click', this.getNewContactValues);
@@ -418,10 +430,11 @@ class Form {
 			let url = await reader.result;
 			if(New) { 
 				this.newImageURL = url;
+				this.changeNewImageBackground();
 			} else {
 				this.editImageURL = url;
+				this.changeEditedImageBackground();
 			}
-			console.log(url);
 		}
 		
 		for(let i = 0; i < files.length; i++) {
