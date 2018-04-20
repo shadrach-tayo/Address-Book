@@ -806,6 +806,7 @@ input:focus::placeholder {
 .active-template {
 	top: 0;
 	display: block;
+	position: fixed;
 	-webkit-animation: moveIn .3s ease-in;
 	        animation: moveIn .3s ease-in;
 	-webkit-animation-fill-mode: backwards;

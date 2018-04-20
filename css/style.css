@@ -689,6 +689,7 @@ input:focus::placeholder {
 .active-template {
 	top: 0;
 	display: block;
+	position: fixed;
 	animation: moveIn .3s ease-in;
 	animation-fill-mode: backwards;
 }
