@@ -1,9 +1,3 @@
-import contacts from './Data.js';
-
-for(let contact of contacts) {
-	console.log(contact.name);
-}
-
 const sidenavContainer = document.querySelector('.sidenav-container');
 const sidenav = document.querySelector('.sidenav');
 const sidenavToggle = document.querySelector('.sidenav-toggle');

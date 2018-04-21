@@ -417,7 +417,7 @@ body {
 	background-image: url('../images/hero.jpg');
 	background-position: center;
 	background-repeat: no-repeat;
-	background-size: cover;
+	background-size: 100% 100%;
 	position: relative;
 }
 
@@ -517,10 +517,11 @@ ul.details-list {
 	color: var(--color-dark-grey);
 }
 
-.detail-name {
+.detail-value {
 	flex: 2;
 	align-self: flex-end;
-	font-size: 1.2rem;
+	font-size: 1rem;
+	font-weight: 600;
 	letter-spacing: .2px;
 	text-align: right;
 }

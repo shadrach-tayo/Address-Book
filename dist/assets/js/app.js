@@ -241,11 +241,11 @@ class View {
 				<ul class="details-list">
 					<li class="detail-item">
 						<span class="detail-title">Mobile :</span>
-						<span class="detail">${contact.phone}</span>
+						<span class="detail-value">${contact.phone}</span>
 					</li>
 					<li class="detail-item">
 						<span class="detail-title">Email :</span>
-						<span class="detail-name">${contact.email}</span>
+						<span class="detail-value">${contact.email}</span>
 					</li>
 				</ul>
 			</div>
@@ -418,8 +418,8 @@ class Form {
 				name,
 				phone,
 				email,
-				avatarUrl: imageUrl,
-				backgroundUrl: imageUrl
+				avatarUrl: imageUrl ? imageUrl : './assets/images/user-shape.svg',
+				backgroundUrl: imageUrl ? imageUrl : './assets/images/user-shape.svg'
 			}
 
 			this.AddNewForm.reset();
@@ -466,3 +466,4 @@ App.view = new View();
 var form = new Form();
 
 
+// TODO: Add default image for new contacts
