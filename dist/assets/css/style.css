@@ -608,7 +608,7 @@ ul.details-list {
 	padding: 0;
 	display: none;
 	background-color: var(--color-dark-white);
-	position: absolute;
+	position: fixed;
 	top: 100%;
 	left: 0;
 	z-index: 3;
@@ -643,6 +643,36 @@ ul.details-list {
 	        justify-content: center;
 	-ms-flex-line-pack: distribute;
 	    align-content: space-around;
+}
+
+.add-image {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+
+.add-image input {
+	width: 4rem;
+	margin-bottom: -4rem;
+	margin-left: -4.5rem;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.add-image label {
+	width: 4rem;
+	height: 4rem;
+	background-color: var(--color-dark-purple);
+	background-image: url(../images/photo-camera.svg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 2rem;
+	border-radius: 50%;
+	border: none;
+	position: absolute;
+	pointer-events: none;
+	right: .5rem;
+	top: .3rem;
 }
 
 input {
@@ -801,6 +831,7 @@ input:focus::placeholder {
 .active-template {
 	top: 0;
 	display: block;
+	position: fixed;
 	-webkit-animation: moveIn .3s ease-in;
 	        animation: moveIn .3s ease-in;
 	-webkit-animation-fill-mode: backwards;

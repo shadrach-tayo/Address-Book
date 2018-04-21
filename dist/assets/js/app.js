@@ -1,3 +1,5 @@
+import contacts from './Data.js';
+import { addListenerAndCallback, generateId, validateData } from './helper.js';
 
 class AddressBook {
 	constructor(name, contacts) {
@@ -87,6 +89,7 @@ class AddressBook {
 
 	showNewContactTemplate() {
 		this.view.showTemplate(this.view.newContactTemplate);
+		form.newDetailsHeader.style.backgroundImage = 'url(../images/hero.jpg)';
 	}
 
 	populateData() {
@@ -181,21 +184,6 @@ class AddressBook {
 }
 
 
-var contacts = [
-	{id: '16a', name: 'Shadrach Temitayo', phone: +2348146023912, email: 'shadrachtemitayo@gmail.com', avatarUrl: './assets/images/shadrach.jpg', backgroundUrl: '../images/shadrach-bg.jpeg'},
-	{id: '11a', name: 'Dan Abramov', phone: +23418933925, email: 'danabramov@gmail.com', avatarUrl: './assets/images/dan-abramov.jpg', backgroundUrl: '../images/dan-abramov.jpg'},
-	{id: '12a', name: 'kyle Simpson', phone: +23418933925, email: 'kylesimpson@gmail.com', avatarUrl: './assets/images/getify.jpg', backgroundUrl: '../images/getify.jpg'},
-	{id: '13a', name: 'Sophie Alpert', phone: +23418933925, email: 'sophiealpert@gmail.com', avatarUrl: './assets/images/sophie.jpg', backgroundUrl: '../images/sophie-bg.jpg'},
-	{id: '14a', name: 'Josh Pagley', phone: +23418933925, email: 'joshpagley@gmail.com', avatarUrl: './assets/images/jpegley.jpg', backgroundUrl: '../images/jpegley-bg.jpg'},
-	{id: '15a', name: 'Paul Lewis', phone: +23418933925, email: 'paul.lewis@gmail.com', avatarUrl: './assets/images/paul-lewis.jpg', backgroundUrl: '../images/paul-lewis-bg.jpg'},
-	{id: '17a', name: 'Msbrandy Morgan', phone: +23418933925, email: 'brandymorgan@gmail.com', avatarUrl: './assets/images/msbrandymorgan.jpg', backgroundUrl: '../images/msbrandymorgan-bg.jpg'},
-	{id: '18a', name: 'Nicholas Zakas', phone: +23418933925, email: 'nicholas@gmail.com', avatarUrl: './assets/images/zakas.jpg', backgroundUrl: '../images/zakas-bg.jpg'},
-	{id: '19a', name: 'Chris Sean', phone: +23418933925, email: 'chrissean@gmail.com', avatarUrl: './assets/images/chris-sean.jpg', backgroundUrl: '../images/chris-sean-bg.jpg'},
-	{id: '11b', name: 'Lydia Hallie', phone: +23418933925, email: 'lydiahallie@gmail.com', avatarUrl: './assets/images/lydia-hallie.jpg', backgroundUrl: '../images/lydia-hallie-bg.jpg'},
-	{id: '11c', name: 'Ryan Florence', phone: +23418933925, email: 'ryan@gmail.com', avatarUrl: './assets/images/ryan.jpg', backgroundUrl: '../images/ryan-bg.jpg'}
-];
-
-
 class View {
 	constructor() {
 		// get templates
@@ -224,7 +212,7 @@ class View {
 
 	getBackButtons() {
 		this.removeButtons = document.querySelectorAll('.js-remove-template');
-		[...this.removeButtons].forEach(button => App.attachListenerAndCallback(button, 'click', this.removeTemplates));
+		[...this.removeButtons].forEach(button => addListenerAndCallback(button, 'click', this.removeTemplates));
 
 	}
 
@@ -271,10 +259,14 @@ class View {
 		this.hideTemplates();
 		this.clearTemplate(this.editContactTemplate);
 		this.editContactTemplate.innerHTML += `
-			<div class="details-header" style="background-image: url(${contact.backgroundUrl})">
+			<div class="details-header edit-details-header" style="background-image: url(${contact.backgroundUrl})">
 				<button class="back-btn js-remove-template"></button>
 				<div class="action-buttons">
 					<button type="submit" class="js-save-contact" data-key="${contact.id}"></button>
+				</div>
+				<div class="add-image">
+					<label for="edit contact image" class="file-label"></label>
+					<input type="file" class="edit-contact-avatar"></input>
 				</div>
 			</div>
 			<div class="edit-contact-body">
@@ -328,32 +320,6 @@ class View {
 }
 
 
-// Helper functions 
-
-function validateData(name, phone) {
-	if(name = '' && name.length > 20) return false;
-	let phoneReg = /[0-9]{11,14}/;
-	if(!phoneReg.test(phone)) return false
-
-	return true;
-}
-
-function generateId() { 
-	let num = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-	let alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
-	let id = '';
-	for(let i = 0; i < 3; i++) {
-		if(i % 2 == 0) {
-			id += num[Math.floor(Math.random() * 9)];
-		} else {
-			id += alpha[Math.floor(Math.random() * 9)];
-		}
-	}
-	return id;
-}
-
-
-
 // Form class handles form inputs for both new and edited contacts 
 
 class Form {
@@ -362,20 +328,33 @@ class Form {
 		this.AddNewForm = document.querySelector('.contact-form');
 
 
+		this.getImageUrl = this.getImageUrl.bind(this);
 		this.getNewContactValues = this.getNewContactValues.bind(this);
 		this.getNewContactInputs = this.getNewContactInputs.bind(this);
 		this.getEditedContactInputs = this.getEditedContactInputs.bind(this);
-		this.getEditedContactValues = this.getEditedContactValues.bind(this);
-		// this.validateData = this.validateData.bind(this);
-		// this.generateId = this.generateId.bind(this);
+		this.getEditedContactValues = this.getEditedContactValues.bind(this);	
 		this.clearInputValues = this.clearInputValues.bind(this);
+		this.changeNewImageBackground = this.changeNewImageBackground.bind(this);
+		this.changeEditedImageBackground = this.changeEditedImageBackground.bind(this);
 
 		this.getNewContactInputs()
 		this.addEventListeners();
 	}
 
 	addEventListeners() {
-		this.AddNewForm.addEventListener('submit', Form.getNewContactValues);
+		this.AddNewForm.addEventListener('submit', this.getNewContactValues);
+
+		this.newImageInput.addEventListener('change', () => {
+			this.getImageUrl(this.newImageInput.files, true);
+		});
+	}
+
+	changeNewImageBackground() {
+		this.newDetailsHeader.style.backgroundImage = `url(${this.newImageURL})`;
+	} 
+
+	changeEditedImageBackground() {
+		this.editDetailsHeader.style.backgroundImage = `url(${this.editImageURL})`;
 	}
 
 	getEditedContactInputs() {
@@ -383,27 +362,55 @@ class Form {
 		this.editNameInput = document.querySelector('.edit-contact-name');
 		this.editPhoneInput = document.querySelector('.edit-contact-phone');
 		this.editEmailInput = document.querySelector('.edit-contact-email');
+		this.editImageInput = document.querySelector('.edit-contact-avatar');
+		this.editDetailsHeader = document.querySelector('.edit-details-header');
 		this.SubmitEditedContact = document.querySelector('.js-save-contact');
 
 		this.editOldForm.addEventListener('submit', this.getEditedContactValues);
-		App.attachListenerAndCallback(this.SubmitEditedContact, 'click', this.getEditedContactValues);
+		addListenerAndCallback(this.SubmitEditedContact, 'click', this.getEditedContactValues);
+
+		this.editImageInput.addEventListener('change', () => {
+			this.getImageUrl(this.editImageInput.files, false);
+		})
 	}
 
 	getNewContactInputs() {
 		this.newNameInput = document.querySelector('.new-contact-name');
 		this.newPhoneInput = document.querySelector('.new-contact-phone');
 		this.newEmailInput = document.querySelector('.new-contact-email');
+		this.newImageInput = document.querySelector('.new-contact-avatar');
+		this.newDetailsHeader = document.querySelector('.new-details-header');
 		this.newContactSubmit = document.querySelector('.js-new-contact');
 
-		App.attachListenerAndCallback(this.newContactSubmit, 'click', this.getNewContactValues);
+		addListenerAndCallback(this.newContactSubmit, 'click', this.getNewContactValues);
+	}
+
+	getImageUrl(files, New = true) {
+		let reader = new FileReader();
+		reader.onloadend = async () => {
+			let url = await reader.result;
+			if(New) { 
+				this.newImageURL = url;
+				this.changeNewImageBackground();
+			} else {
+				this.editImageURL = url;
+				this.changeEditedImageBackground();
+			}
+		}
+		
+		for(let i = 0; i < files.length; i++) {
+			reader.readAsDataURL(files[i]);
+		}
 	}
 
 	getNewContactValues(e) {
 		e.preventDefault();
-		// this.newContactValues = [this.newNameInput.value, this.newPhoneInput.value, this.newEmailInput.value];
-		let [name, phone, email] = [document.querySelector('.new-contact-name').value, document.querySelector('.new-contact-phone').value, document.querySelector('.new-contact-email').value];
 
+		let [name, phone, email] = [document.querySelector('.new-contact-name').value, document.querySelector('.new-contact-phone').value, document.querySelector('.new-contact-email').value];
+		let imageUrl = this.newImageURL;
+		
 		let result_ok = validateData(name, phone);
+		
 		if(result_ok) {
 			let id = generateId();
 			let contact = {
@@ -411,21 +418,22 @@ class Form {
 				name,
 				phone,
 				email,
-				avatarUrl: './assets/images/avatar.jpg',
-				backgroundUrl: '../images/avatar.jpg'
+				avatarUrl: imageUrl,
+				backgroundUrl: imageUrl
 			}
-			this.clearInputValues(this.newNameInput, this.newPhoneInput, this.newEmailInput);
+
+			this.AddNewForm.reset();
 			App.view.removeTemplates();
 			App.addNewContact(contact);
 		}
+		
 	}
-
+	
 	getEditedContactValues(e) {
 		e.preventDefault();
-		console.log('getting edited contact values');
 		let id = document.querySelector('.js-save-contact').dataset.key;
-		console.log(id);
 
+		// get form values of the edited contact
 		let [name, phone, email] = [this.editNameInput.value, this.editPhoneInput.value, this.editEmailInput.value];
 
 		// validate inputs
@@ -437,10 +445,11 @@ class Form {
 				name,
 				phone,
 				email,
-				avatarUrl: editedContact.avatarUrl ? editedContact.avatarUrl : './assets/images/avatar.jpg',
-				backgroundUrl: editedContact.backgroundUrl ? editedContact.backgroundUrl : '../images/avatar.jpg'
+				avatarUrl: this.editImageURL ? this.editImageURL : editedContact.avatarUrl,
+				backgroundUrl: this.editImageURL ? this.editImageURL : editedContact.backgroundUrl,
 			}
-			this.clearInputValues(this.editNameInput, this.editPhoneInput, this.editEmailInput);
+
+			this.editOldForm.reset();
 			App.view.removeTemplates();
 			App.addEditedContact(contact);
 		}
@@ -456,13 +465,4 @@ var App = new AddressBook('shadrach', contacts);
 App.view = new View();
 var form = new Form();
 
-// Todos: 
 
-// Get Icons for the app shell model, user default icon ---> done, nav-bar icon;
-
-// Add Icons to form and change form view in response to screen size --------> done;
-// Responsive images for the main view or no images at all --- done;
-// Change all icons to svg format make the action icons white with almost transparent backgrounds ------> done
-// work on the app shell model
-// get 2 images each of the following people 'lydia hallie', 'chris sean', 'msbrandymorgan', 
-// --> jpegley', 'dan abramov', 'kyle simpsons', nicholas zakas, paul lewis, sophie alpert, ryan florence ------ done;
