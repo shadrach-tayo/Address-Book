@@ -610,7 +610,7 @@ input[type="text"] {
 	background-size: 2rem;
 }
 
-input[type="phone"] {
+input[type="tel"] {
 	background-image: url(../images/phone-receiver.svg);
 	background-position: 1rem center;
 	background-repeat: no-repeat;

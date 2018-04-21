@@ -274,7 +274,7 @@ class View {
 				<div class="contact-form-block">
 					<form class="edit-contact-form">
 						<input type="text" class="edit-contact-name" value="${contact.name}" placeholder="Name" autofocus required />
-						<input type="phone" class="edit-contact-phone" value="${contact.phone}" placeholder="Phone" required />
+						<input type="tel" class="edit-contact-phone" value="${contact.phone}" placeholder="Phone" required />
 						<input type="email" class="edit-contact-email" value="${contact.email}" placeholder="Email" required />
 					</form>
 				</div>
