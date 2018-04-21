@@ -329,11 +329,13 @@ class Form {
 
 
 		this.getImageUrl = this.getImageUrl.bind(this);
+		this.clearInputValues = this.clearInputValues.bind(this);
+		this.enableEditSubmit = this.enableEditSubmit.bind(this);
+		this.disableEditSubmit = this.disableEditSubmit.bind(this);
 		this.getNewContactValues = this.getNewContactValues.bind(this);
 		this.getNewContactInputs = this.getNewContactInputs.bind(this);
 		this.getEditedContactInputs = this.getEditedContactInputs.bind(this);
 		this.getEditedContactValues = this.getEditedContactValues.bind(this);	
-		this.clearInputValues = this.clearInputValues.bind(this);
 		this.changeNewImageBackground = this.changeNewImageBackground.bind(this);
 		this.changeEditedImageBackground = this.changeEditedImageBackground.bind(this);
 
@@ -357,6 +359,13 @@ class Form {
 		this.editDetailsHeader.style.backgroundImage = `url(${this.editImageURL})`;
 	}
 
+	enableEditSubmit() {
+		this.submitEditedContact.disabled = false;
+	}
+	disableEditSubmit() {
+		this.submitEditedContact.disabled = true;
+	}
+
 	getEditedContactInputs() {
 		this.editOldForm = document.querySelector('.edit-contact-form');
 		this.editNameInput = document.querySelector('.edit-contact-name');
@@ -364,14 +373,20 @@ class Form {
 		this.editEmailInput = document.querySelector('.edit-contact-email');
 		this.editImageInput = document.querySelector('.edit-contact-avatar');
 		this.editDetailsHeader = document.querySelector('.edit-details-header');
-		this.SubmitEditedContact = document.querySelector('.js-save-contact');
+		this.submitEditedContact = document.querySelector('.js-save-contact');
+		this.disableEditSubmit();
+
+		// get all inputs that edits contact 
+		this.editContactInputs = [this.editNameInput, this.editImageInput, this.editPhoneInput, this.editEmailInput].forEach(
+			input => addListenerAndCallback(input, 'change', this.enableEditSubmit)
+		);
 
 		this.editOldForm.addEventListener('submit', this.getEditedContactValues);
-		addListenerAndCallback(this.SubmitEditedContact, 'click', this.getEditedContactValues);
+		addListenerAndCallback(this.submitEditedContact, 'click', this.getEditedContactValues);
 
 		this.editImageInput.addEventListener('change', () => {
 			this.getImageUrl(this.editImageInput.files, false);
-		})
+		});
 	}
 
 	getNewContactInputs() {
@@ -466,3 +481,4 @@ App.view = new View();
 var form = new Form();
 
 
+// TODO: Change edit-submit background-image when disabled
