@@ -832,8 +832,8 @@ input:focus::placeholder {
 	top: 0;
 	display: block;
 	position: fixed;
-	-webkit-animation: moveIn .3s ease-in;
-	        animation: moveIn .3s ease-in;
+	-webkit-animation: moveIn .2s linear;
+	        animation: moveIn .2s linear;
 	-webkit-animation-fill-mode: backwards;
 	        animation-fill-mode: backwards;
 }
@@ -852,7 +852,7 @@ input:focus::placeholder {
 	}
 
 	50% {
-		opacity: .5;
+		opacity: .8;
 		top: 50%;
 	}
 
@@ -869,7 +869,7 @@ input:focus::placeholder {
 	}
 
 	50% {
-		opacity: .5;
+		opacity: .8;
 		top: 50%;
 	}
 

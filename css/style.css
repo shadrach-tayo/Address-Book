@@ -714,7 +714,7 @@ input:focus::placeholder {
 	top: 0;
 	display: block;
 	position: fixed;
-	animation: moveIn .3s ease-in;
+	animation: moveIn .2s linear;
 	animation-fill-mode: backwards;
 }
 
@@ -732,7 +732,7 @@ input:focus::placeholder {
 	}
 
 	50% {
-		opacity: .5;
+		opacity: .8;
 		top: 50%;
 	}
 
