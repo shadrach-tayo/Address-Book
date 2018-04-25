@@ -64,6 +64,7 @@ class AddressBook {
 				`;
 		console.log('new contact displayed');
 		this.getViewButtons();
+		this.renderContacts();
 	}
 
 	editContact(button) {
@@ -120,28 +121,34 @@ class AddressBook {
 	renderContacts() {
 		let keys = [...this.contactData.keys()];
 		this.contactListTemplate.innerHTML = "";
+		const contactsToRender = [];
 		for(let key of keys) {
 			if(this.contactData.has(key)) {
 				let contact = this.contactData.get(key);
-				this.contactListTemplate.innerHTML += `
-					<div class="contact text-center" data-key="${contact.id}">
-						<span class="contact-image-block">
-							<img class="contact-avatar" src="${contact.avatarUrl}" alt="${contact.name}'s avatar"></img>
-						</span>
-						<div class="contact-details">
-							<span class="contact-name">${contact.name}
-							</span>
-							<span class="contact-number">${contact.phone}</span>
-						</div>
-						<span class="contact-view-button">
-							<button class="contact-btn js-view-contact" data-key="${contact.id}">view</button>
-						<span>
-					</div>
-				`;
+				contactsToRender.push(contact);
 			}
 		}
+		contactsToRender.sort((a, b) => {
+			return a.name[0].toLowerCase() > b.name[0].toLowerCase() ? 1 : -1;
+		});
+		contactsToRender.forEach(contact => {
+			this.contactListTemplate.innerHTML += `
+				<div class="contact text-center" data-key="${contact.id}">
+					<span class="contact-image-block">
+						<img class="contact-avatar" src="${contact.avatarUrl}" alt="${contact.name}'s avatar"></img>
+					</span>
+					<div class="contact-details">
+						<span class="contact-name">${contact.name}
+						</span>
+						<span class="contact-number">${contact.phone}</span>
+					</div>
+					<span class="contact-view-button">
+						<button class="contact-btn js-view-contact" data-key="${contact.id}">view</button>
+					<span>
+				</div>
+			`;
+		});
 		this.getViewButtons();
-
 	}
 
 	removeDeletedContact() {
