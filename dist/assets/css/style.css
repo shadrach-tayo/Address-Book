@@ -171,8 +171,8 @@ body {
 .sidenav-header {
 	width: 100%;
 	height: 30%;
-	background-image: -webkit-gradient(linear, left top, right bottom, from(var(--color-light-purple)), to(var(--color-dark-purple)));
-	background-image: linear-gradient(to right bottom, var(--color-light-purple), var(--color-dark-purple));
+	background-image: url(../images/side-nav-bg.jpg);
+	background-size: cover;
 }
 
 .sidenav-header--user-image {
@@ -184,7 +184,7 @@ body {
 
 .sidenav-content {
 	height: 70%;
-	background-color: var(--color-light-grey);
+	background-color: var(--color-white);
 }
 
 
