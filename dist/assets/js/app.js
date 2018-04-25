@@ -138,7 +138,7 @@ class AddressBook {
 						<img class="contact-avatar" src="${contact.avatarUrl}" alt="${contact.name}'s avatar"></img>
 					</span>
 					<div class="contact-details">
-						<span class="contact-name">${contact.name}
+						<span class="contact-name">${contact.name.slice(0, 1).toUpperCase() + contact.name.slice(1)}
 						</span>
 						<span class="contact-number">${contact.phone}</span>
 					</div>
